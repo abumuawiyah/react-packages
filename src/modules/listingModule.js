@@ -6,7 +6,7 @@ const initialState = {
 };
 const FILTER_LIST = "FILTER_LIST";
 
-function reducer(state, action) {
+const reducer = (state, action) => {
   const { type, selectedTag = "", tasks = [] } = action;
   switch (type) {
     case FILTER_LIST:
@@ -18,9 +18,9 @@ function reducer(state, action) {
     default:
       return initialState;
   }
-}
+};
 
-function ListingModule(props) {
+const ListingModule = props => {
   const [listingState, dispatch] = useReducer(reducer, initialState);
   const listingContextValue = { ...props, ...listingState, dispatch };
   return (
@@ -30,9 +30,9 @@ function ListingModule(props) {
       <ListingFooter />
     </ListingContext.Provider>
   );
-}
+};
 
-function ListingHeader() {
+const ListingHeader = React.memo(() => {
   const listingContext = useContext(ListingContext);
   const { dispatch, tasks = [] } = listingContext;
   const tags = [...new Set([...tasks.map(l => l.type)])];
@@ -57,9 +57,10 @@ function ListingHeader() {
       ))}
     </section>
   );
-}
+});
 
-function ListingTable() {
+const ListingTable = React.memo(() => {
+  console.log("tes");
   const listingContext = useContext(ListingContext);
   const { tasks } = listingContext;
 
@@ -70,10 +71,11 @@ function ListingTable() {
       ))}
     </ul>
   );
-}
+});
 
-function ListingFooter() {
+const ListingFooter = React.memo(() => {
+  console.log("footer");
   return <div>Footer</div>;
-}
+});
 
 export default ListingModule;
